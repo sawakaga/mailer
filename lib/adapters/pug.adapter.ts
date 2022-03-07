@@ -26,9 +26,9 @@ export class PugAdapter implements TemplateAdapter {
     const templateDir = path.isAbsolute(template)
       ? path.dirname(template)
       : path.join(
-          get(mailerOptions, 'template.dir', ''),
-          path.dirname(template),
-        );
+        get(mailerOptions, 'template.dir', ''),
+        path.dirname(template),
+      );
     const templatePath = path.join(templateDir, templateName + templateExt);
 
     const options = {
