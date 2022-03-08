@@ -15,10 +15,23 @@ export interface AttachmentLikeObject {
   path: string;
 }
 
+type TargetAddress = string | Array<string | Address>;
+
+export interface Attachments {
+  filename: string;
+  content?: any;
+  path?: string;
+  contentType?: string;
+  cid?: string;
+  encoding?: string;
+  contentDisposition?: 'inline' | 'attachment';
+  href?: string;
+}
+
 export interface ISendMailOptions extends SendMailOptions {
-  to?: string | Address | Array<string | Address>;
-  cc?: string | Address | Array<string | Address>;
-  bcc?: string | Address | Array<string | Address>;
+  to?: TargetAddress;
+  cc?: TargetAddress;
+  bcc?: TargetAddress;
   replyTo?: string | Address;
   inReplyTo?: string | Address;
   from?: string | Address;
@@ -37,18 +50,6 @@ export interface ISendMailOptions extends SendMailOptions {
   };
   transporterName?: string;
   template?: string;
-  attachments?: {
-    filename: string;
-    content?: any;
-    path?: string;
-    contentType?: string;
-    cid?: string;
-    encoding?: string;
-    contentDisposition?: string;
-    href?: string;
-    encoding?: string;
-    contentDisposition?: 'attachment' | 'inline' | string | undefined;
-    href?: string;
-  }[];
+  attachments?: Attachments[];
   dkim?: DKIM.Options;
 }

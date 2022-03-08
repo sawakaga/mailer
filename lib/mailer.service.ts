@@ -88,7 +88,7 @@ export class MailerService {
         this.transporters.set(
           name,
           this.transportFactory.createTransport(
-            this.mailerOptions.transports![name],
+            this.mailerOptions.transports[name],
           ),
         );
         this.initTemplateAdapter(templateAdapter, this.transporters.get(name)!);
@@ -110,7 +110,7 @@ export class MailerService {
         this.transporters &&
         this.transporters.get(sendMailOptions.transporterName)
       ) {
-        return await this.transporters
+        return this.transporters
           .get(sendMailOptions.transporterName)!
           .sendMail(sendMailOptions);
       } else {
@@ -120,7 +120,7 @@ export class MailerService {
       }
     } else {
       if (this.transporter) {
-        return await this.transporter.sendMail(sendMailOptions);
+        return this.transporter.sendMail(sendMailOptions);
       } else {
         throw new ReferenceError(`Transporter object undefined`);
       }
