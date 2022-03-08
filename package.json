@@ -34,7 +34,7 @@
     "minor": "npm run release -- --release-as minor",
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version",
-    "test": "jest"
+    "test": "snyk test && jest"
   },
   "husky": {
     "hooks": {
@@ -83,10 +83,10 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.4.0",
+    "snyk": "^1.864.0",
     "standard-version": "9.3.2",
     "ts-jest": "27.1.2",
     "ts-node": "10.2.1",
     "typescript": "4.3.5"
-  },
-  "packageManager": "yarn@3.2.0"
+  }
 }
