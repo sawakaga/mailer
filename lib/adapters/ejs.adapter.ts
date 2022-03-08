@@ -36,16 +36,16 @@ export class EjsAdapter implements TemplateAdapter {
     const templateDir = path.isAbsolute(template)
       ? path.dirname(template)
       : path.join(
-          get(mailerOptions, 'template.dir', ''),
-          path.dirname(template),
-        );
+        get(mailerOptions, 'template.dir', ''),
+        path.dirname(template),
+      );
     const templatePath = path.join(templateDir, templateName + templateExt);
 
     if (!this.precompiledTemplates[templateName]) {
       try {
-        const template = fs.readFileSync(templatePath, 'utf-8');
+        const tmp = fs.readFileSync(templatePath, 'utf-8');
 
-        this.precompiledTemplates[templateName] = compile(template, {
+        this.precompiledTemplates[templateName] = compile(tmp, {
           ...get(mailerOptions, 'template.options', {}),
           filename: templatePath,
         });
@@ -59,8 +59,8 @@ export class EjsAdapter implements TemplateAdapter {
     const render = (html: string) => {
       if (this.config.inlineCssEnabled) {
         inlineCss(html, this.config.inlineCssOptions)
-          .then((html) => {
-            mail.data.html = html;
+          .then((h) => {
+            mail.data.html = h;
             return callback();
           })
           .catch(callback);

@@ -34,17 +34,17 @@ export class HandlebarsAdapter implements TemplateAdapter {
   public compile(mail: any, callback: any, mailerOptions: MailerOptions): void {
     const precompile = (template: any, cb: any, options: any) => {
       const templateExt = path.extname(template) || '.hbs';
-      const templateName = path.basename(template, path.extname(template));
+      const tName = path.basename(template, path.extname(template));
       const templateDir = path.isAbsolute(template)
         ? path.dirname(template)
         : path.join(get(options, 'dir', ''), path.dirname(template));
-      const templatePath = path.join(templateDir, templateName + templateExt);
+      const templatePath = path.join(templateDir, tName + templateExt);
 
-      if (!this.precompiledTemplates[templateName]) {
+      if (!this.precompiledTemplates[tName]) {
         try {
           const tmp = fs.readFileSync(templatePath, 'utf-8');
 
-          this.precompiledTemplates[templateName] = handlebars.compile(
+          this.precompiledTemplates[tName] = handlebars.compile(
             tmp,
             get(options, 'options', {}),
           );
@@ -55,7 +55,7 @@ export class HandlebarsAdapter implements TemplateAdapter {
 
       return {
         templateExt,
-        templateName,
+        tName,
         templateDir,
         templatePath,
       };
@@ -75,13 +75,13 @@ export class HandlebarsAdapter implements TemplateAdapter {
     if (runtimeOptions.partials) {
       const files = glob.sync(path.join(runtimeOptions.partials.dir, '*.hbs'));
       files.forEach((file) => {
-        const { templateName, templatePath } = precompile(
+        const { tmpName, templatePath } = precompile(
           file,
           {},
           runtimeOptions.partials,
         );
         handlebars.registerPartial(
-          templateName,
+          tmpName,
           fs.readFileSync(templatePath, 'utf-8'),
         );
       });
